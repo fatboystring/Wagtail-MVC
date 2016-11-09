@@ -14,4 +14,3 @@ env:
   - TOXENV=py34-wagtail17
   - TOXENV=py35-wagtail17
   - TOXENV=flake8
-  - TOXENV=coverage
