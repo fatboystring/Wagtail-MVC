@@ -24,3 +24,10 @@ class WagtailMvcViewWrapperTestCase(TestCase):
         """
         self.instance.serve()
         self.view.assert_called_with()
+
+    def test_get_view_restrictions(self):
+        """
+        The method should call the get_view_restrictions method on the page
+        """
+        self.instance.get_view_restrictions()
+        self.page.get_view_restrictions.assert_called_with()
