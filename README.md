@@ -33,12 +33,12 @@ The example above will resolve the appropriate view from the `urls.py` file at `
 For example:
 
 Consider the page shown in the example above being available in the page tree at `/foo/bar/`.
-When a user makes a request for `/foo/bar/' the remaining (unmatched) part of the path (along with the defined url_conf) is passed to django's resolve method.
+When a user makes a request for `/foo/bar/` the remaining (unmatched) part of the path (along with the defined url_conf) is passed to django's resolve method.
 
 So:
 
-A request for `/foo/bar/` would call `resolve('', url_config='my_app.urls')
-A request for `/foo/bar/baz/` would call `resolve('baz/', url_config='my_app.urls')
+A request for `/foo/bar/` would call `resolve('', url_config='my_app.urls')`
+A request for `/foo/bar/baz/` would call `resolve('baz/', url_config='my_app.urls')`
 
 If a view could not be resolved for whatever reason a standard 404 will be raised and returned.
 
