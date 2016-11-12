@@ -77,7 +77,7 @@ class WagtailMvcMixin(object):
             else:
                 raise
         else:
-            if hasattr(route_result[0].specific, 'wagtail_url_conf'):
-                return route_result[0].resolve_view(path_components)
-            else:
-                return route_result
+            if not isinstance(route_result[0], WagtailMvcViewWrapper):
+                if hasattr(route_result[0].specific, 'wagtail_url_conf'):
+                    return route_result[0].resolve_view(path_components)
+            return route_result

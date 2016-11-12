@@ -5,7 +5,9 @@ wagtail_mvc tests
 from __future__ import unicode_literals
 from django.test import TestCase
 from mock import Mock
+from wagtail.wagtailcore.models import Site
 from wagtail_mvc.models import WagtailMvcViewWrapper
+from wagtail_mvc.factories import TestModelOneFactory, TestModelTwoFactory
 
 
 class WagtailMvcViewWrapperTestCase(TestCase):
@@ -37,38 +39,46 @@ class WagtailMvcMixinTestCase(TestCase):
     """
     Tests the WagtailMvcMixin
     """
-    def test_calls_serve_if_wagtail_url_conf_not_defined(self):
+    def setUp(self):
+        super(WagtailMvcMixinTestCase, self).setUp()
+        self.homepage = TestModelOneFactory.create(path="0002", depth=0, url_path="/", numchild=1)
+        self.page_1 = TestModelTwoFactory.create(path="00020001", depth=1)
+        self.site = Site.objects.create(hostname='example.com', root_page=self.homepage, is_default_site=True)
+
+    def test_renders_if_wagtail_url_conf_not_defined(self):
         """
-        The serve method should still be called if the wagtail_url_conf attribute is not defined
+        The page should render if no wagtail_url_conf attribute is defined
         """
-        pass
+        response = self.client.get(self.homepage.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'test_app/test_model_one.html')
 
     def test_resolve_view_resolves_view(self):
         """
         The resolve_view method should return the correct data
         """
-        pass
+        response = self.client.get(self.page_1.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'test_app/index.html')
 
     def test_page_in_view_kwargs(self):
         """
         The resolve_view method should add the page instance to the view kwargs
         """
-        pass
+        response = self.client.get(self.page_1.url)
+        self.assertEqual(response.context['page'], self.page_1)
 
     def test_resolve_view_raises_404(self):
         """
         The resolve_view method should raise a Resolver404 exception
         """
-        pass
-
-    def test_url_config_used_to_serve_actual_page(self):
-        """
-        The defined url config should be used to serve the page when a full url is matched
-        """
-        pass
+        response = self.client.get('{0}foo/'.format(self.page_1.url))
+        self.assertEqual(response.status_code, 404)
 
     def test_url_config_used_to_serve_sub_page(self):
         """
         The defined url config should be used to serve a sub page when a partial url is matched
         """
-        pass
+        response = self.client.get('{0}sub-page/'.format(self.page_1.url))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'test_app/sub_page.html')
