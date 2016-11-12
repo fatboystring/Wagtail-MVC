@@ -41,9 +41,18 @@ class WagtailMvcMixinTestCase(TestCase):
     """
     def setUp(self):
         super(WagtailMvcMixinTestCase, self).setUp()
-        self.homepage = TestModelOneFactory.create(path="0002", depth=0, url_path="/", numchild=1)
+        self.homepage = TestModelOneFactory.create(
+            path="0002",
+            depth=0,
+            url_path="/",
+            numchild=1
+        )
         self.page_1 = TestModelTwoFactory.create(path="00020001", depth=1)
-        self.site = Site.objects.create(hostname='example.com', root_page=self.homepage, is_default_site=True)
+        self.site = Site.objects.create(
+            hostname='example.com',
+            root_page=self.homepage,
+            is_default_site=True
+        )
 
     def test_renders_if_wagtail_url_conf_not_defined(self):
         """
@@ -77,7 +86,7 @@ class WagtailMvcMixinTestCase(TestCase):
 
     def test_url_config_used_to_serve_sub_page(self):
         """
-        The defined url config should be used to serve a sub page when a partial url is matched
+        The url config should be used to serve a sub page
         """
         response = self.client.get('{0}sub-page/'.format(self.page_1.url))
         self.assertEqual(response.status_code, 200)

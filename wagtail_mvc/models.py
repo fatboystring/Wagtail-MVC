@@ -4,7 +4,7 @@ MVC model mixins for Wagtail CMS
 """
 from __future__ import unicode_literals
 from django.http import Http404
-from django.urls import resolve
+from django.core.urlresolvers import resolve
 
 
 class WagtailMvcViewWrapper(object):
