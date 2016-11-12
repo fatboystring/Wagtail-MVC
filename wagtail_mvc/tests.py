@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from mock import Mock
 from wagtail.wagtailcore.models import Site
+from test_app.factories import TestModelOneFactory, TestModelTwoFactory
 from wagtail_mvc.models import WagtailMvcViewWrapper
-from wagtail_mvc.factories import TestModelOneFactory, TestModelTwoFactory
 
 
 class WagtailMvcViewWrapperTestCase(TestCase):

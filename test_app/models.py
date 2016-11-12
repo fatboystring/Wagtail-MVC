@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""
+Test app models for the wagtail_mvc app
+"""
+from __future__ import unicode_literals
 from wagtail.wagtailcore.models import Page
 from wagtail_mvc.models import WagtailMvcMixin
 

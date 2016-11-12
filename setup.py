@@ -12,7 +12,7 @@ setup(
       author_email='dan.stringer1983@googlemail.com',
       url='https://github.com/fatboystring/Wagtail-MVC/',
       download_url='https://github.com/fatboystring/Wagtail-MVC/tarball/0.1.0',
-      packages=find_packages(exclude=['app']),
+      packages=find_packages(exclude=['app', 'test_app']),
       license='MIT',
       classifiers=[
             'Development Status :: 5 - Production/Stable',
