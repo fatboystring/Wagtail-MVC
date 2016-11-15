@@ -44,7 +44,7 @@ If a view could not be resolved for whatever reason a standard 404 will be raise
 
 ## Support
 
-Currently tested against wagtail1.7 but this package is likely to work with older versions of wagtail without any problems.  Tests coming soon.
+Currently tested against wagtail1.7 and wagtail1.6 but this package is likely to work with older versions of wagtail without any problems.  Tests coming soon.
 
 # Change Log
 

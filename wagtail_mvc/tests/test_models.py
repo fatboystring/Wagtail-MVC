@@ -3,11 +3,17 @@
 wagtail_mvc tests
 """
 from __future__ import unicode_literals
-from django.test import TestCase
+
+from django.http import Http404
+from django.test import RequestFactory, TestCase
 from mock import Mock
-from wagtail.wagtailcore.models import Site
-from test_app.factories import TestModelOneFactory, TestModelTwoFactory
+from wagtail.wagtailcore.models import RouteResult
+
 from wagtail_mvc.models import WagtailMvcViewWrapper
+from wagtail_mvc.tests.test_app.factories import (
+    TestModelOneFactory,
+    TestModelTwoFactory
+)
 
 
 class WagtailMvcViewWrapperTestCase(TestCase):
@@ -41,6 +47,7 @@ class WagtailMvcMixinTestCase(TestCase):
     """
     def setUp(self):
         super(WagtailMvcMixinTestCase, self).setUp()
+        self.request = RequestFactory().get('/fake-path/')
         self.homepage = TestModelOneFactory.create(
             path="0002",
             depth=0,
@@ -48,46 +55,41 @@ class WagtailMvcMixinTestCase(TestCase):
             numchild=1
         )
         self.page_1 = TestModelTwoFactory.create(path="00020001", depth=1)
-        self.site = Site.objects.create(
-            hostname='example.com',
-            root_page=self.homepage,
-            is_default_site=True
-        )
 
     def test_renders_if_wagtail_url_conf_not_defined(self):
         """
         The page should render if no wagtail_url_conf attribute is defined
         """
-        response = self.client.get(self.homepage.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'test_app/test_model_one.html')
+        response = self.homepage.route(self.request, [])
+        self.assertIsInstance(response, RouteResult)
+        self.assertEqual(response[0], self.homepage)
 
     def test_resolve_view_resolves_view(self):
         """
         The resolve_view method should return the correct data
         """
-        response = self.client.get(self.page_1.url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'test_app/index.html')
-
-    def test_page_in_view_kwargs(self):
-        """
-        The resolve_view method should add the page instance to the view kwargs
-        """
-        response = self.client.get(self.page_1.url)
-        self.assertEqual(response.context['page'], self.page_1)
+        response = self.page_1.route(self.request, [])
+        self.assertIsInstance(response, RouteResult)
+        self.assertIsInstance(response[0], WagtailMvcViewWrapper)
+        self.assertTrue(callable(response[0].serve))
+        self.assertEqual(response[0].page, self.page_1)
+        self.assertEqual(response[1], [])
+        self.assertEqual(response[2], {'page': self.page_1})
 
     def test_resolve_view_raises_404(self):
         """
         The resolve_view method should raise a Resolver404 exception
         """
-        response = self.client.get('{0}foo/'.format(self.page_1.url))
-        self.assertEqual(response.status_code, 404)
+        self.assertRaises(Http404, self.page_1.route, self.request, ['foo'])
 
     def test_url_config_used_to_serve_sub_page(self):
         """
         The url config should be used to serve a sub page
         """
-        response = self.client.get('{0}sub-page/'.format(self.page_1.url))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'test_app/sub_page.html')
+        response = self.page_1.route(self.request, ['sub-page'])
+        self.assertIsInstance(response, RouteResult)
+        self.assertIsInstance(response[0], WagtailMvcViewWrapper)
+        self.assertTrue(callable(response[0].serve))
+        self.assertEqual(response[0].page, self.page_1)
+        self.assertEqual(response[1], [])
+        self.assertEqual(response[2], {'page': self.page_1})

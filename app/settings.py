@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'test_app',
+    'wagtail_mvc.tests.test_app',
     'wagtail_mvc'
 ]
 

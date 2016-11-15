@@ -5,6 +5,7 @@ MVC model mixins for Wagtail CMS
 from __future__ import unicode_literals
 from django.http import Http404
 from django.core.urlresolvers import resolve
+from wagtail.wagtailcore.models import Page, RouteResult
 
 
 class WagtailMvcViewWrapper(object):
@@ -52,7 +53,8 @@ class WagtailMvcMixin(object):
         specific = self.specific
         view, args, kwargs = resolve(path, urlconf=specific.wagtail_url_conf)
         kwargs['page'] = self
-        return WagtailMvcViewWrapper(view, self), args, kwargs
+        view = WagtailMvcViewWrapper(view, self)
+        return RouteResult(view, args, kwargs)
 
     def route(self, request, path_components):
         """
@@ -66,18 +68,26 @@ class WagtailMvcMixin(object):
 
         :return: Iterable containing ViewWrapper|Page, args, kwargs
         """
-        try:
-            route_result = super(WagtailMvcMixin, self).route(
-                request,
-                path_components
-            )
-        except Http404:
-            if hasattr(self.specific, 'wagtail_url_conf'):
-                return self.resolve_view(path_components)
+        if path_components:
+            child_slug = path_components[0]
+            remaining_components = path_components[1:]
+
+            try:
+                subpage = self.get_children().get(slug=child_slug)
+            except Page.DoesNotExist:
+                if hasattr(self, 'wagtail_url_conf'):
+                    return self.resolve_view(path_components)
+                else:
+                    raise Http404
             else:
-                raise
+                return subpage.specific.route(request, remaining_components)
+
         else:
-            if not isinstance(route_result[0], WagtailMvcViewWrapper):
-                if hasattr(route_result[0].specific, 'wagtail_url_conf'):
-                    return route_result[0].resolve_view(path_components)
-            return route_result
+            # request is for this very page
+            if self.live:
+                if hasattr(self, 'wagtail_url_conf'):
+                    return self.resolve_view(path_components)
+                else:
+                    return RouteResult(self)
+            else:
+                raise Http404

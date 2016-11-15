@@ -3,8 +3,10 @@
 Test app factories for the wagtail_mvc app
 """
 from __future__ import unicode_literals
-from test_app.models import TestModelOne, TestModelTwo
+
 import factory
+
+from wagtail_mvc.tests.test_app.models import TestModelOne, TestModelTwo
 
 
 class TestModelOneFactory(factory.DjangoModelFactory):
