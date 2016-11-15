@@ -1,4 +1,4 @@
-[![Wagtail MVC on pypi](https://img.shields.io/badge/pypi-0.5.0-green.svg)](https://pypi.python.org/pypi/wagtail_mvc)
+[![Wagtail MVC on pypi](https://img.shields.io/badge/pypi-0.1.0-green.svg)](https://pypi.python.org/pypi/wagtail_mvc)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Build status](https://travis-ci.org/fatboystring/Wagtail-MVC.svg?branch=master)
 
