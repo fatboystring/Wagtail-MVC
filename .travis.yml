@@ -10,6 +10,9 @@ addons:
     packages:
       - python3.5
 env:
+  - TOXENV=py27-wagtail15
+  - TOXENV=py34-wagtail15
+  - TOXENV=py35-wagtail15
   - TOXENV=py27-wagtail16
   - TOXENV=py34-wagtail16
   - TOXENV=py35-wagtail16
