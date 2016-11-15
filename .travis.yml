@@ -2,7 +2,7 @@ language: python
 install:
   - pip install tox
 script:
-  - tox
+  - tox -r
 addons:
   apt:
     sources:
@@ -10,6 +10,9 @@ addons:
     packages:
       - python3.5
 env:
+  - TOXENV=py27-wagtail16
+  - TOXENV=py34-wagtail16
+  - TOXENV=py35-wagtail16
   - TOXENV=py27-wagtail17
   - TOXENV=py34-wagtail17
   - TOXENV=py35-wagtail17

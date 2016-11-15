@@ -17,4 +17,4 @@ class TestModelTwo(WagtailMvcMixin, Page):
     """
     Test model with wagtail_url_conf attribute
     """
-    wagtail_url_conf = 'test_app.urls'
+    wagtail_url_conf = 'wagtail_mvc.tests.test_app.urls'
