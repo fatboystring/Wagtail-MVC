@@ -50,8 +50,9 @@ If a view could not be resolved for whatever reason a standard 404 will be raise
 
 ## Support
 
-Currently tested against wagtail1.7, wagtail1.6 and wagtail1.5 but this package is likely to work with older versions of wagtail without any problems.
+Currently tested against wagtail1.8, wagtail1.7, wagtail1.6 and wagtail1.5 but this package is likely to work with older versions of wagtail without any problems.
 
 # Change Log
 
  - 0.1.0: Initial creation of the wagtail_mvc app
+ - 0.2.0: Test against wagtail 1.8
