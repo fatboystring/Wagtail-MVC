@@ -20,6 +20,8 @@ pip install wagtail_mvc
 
 ## Usage
 
+### Models
+
 Just mix the `WagtailMvcMixin` class into your page model and define a `wagtail_url_conf` attribute on your model.
 
 Example:
@@ -47,6 +49,26 @@ A request for `/foo/bar/` would call `resolve('', url_config='my_app.urls')`
 A request for `/foo/bar/baz/` would call `resolve('baz/', url_config='my_app.urls')`
 
 If a view could not be resolved for whatever reason a standard 404 will be raised and returned.
+
+### Urls
+
+A child model of a parent page will often have a url that comprises the parent pages url and the reversed url for the child page.  For child models you may use the `wagtail_mvc_url` decorator from `wagtail_mvc.decorators` to make this easier.
+
+The following implementation example has a parent page whos URL is `/foo/`.  If the call to `reverse` in the example returns the url `/bar/` the decorated function will return `/foo/bar/`.
+
+```
+from wagtail_mvc.decorators import wagtail_mvc_url
+
+class MyModel(Page):
+    @property
+    @wagtail_mvc_url
+    def url(self):
+        return reverse(
+            'my_view_name',
+            urlconf='myapp.urls',
+            kwargs={'slug': self.slug}
+        )
+```
 
 ## Support
 
