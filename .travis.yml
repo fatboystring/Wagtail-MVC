@@ -22,4 +22,16 @@ env:
   - TOXENV=py27-wagtail18
   - TOXENV=py34-wagtail18
   - TOXENV=py35-wagtail18
+  - TOXENV=py27-wagtail19
+  - TOXENV=py34-wagtail19
+  - TOXENV=py35-wagtail19
+  - TOXENV=py27-wagtail110
+  - TOXENV=py34-wagtail110
+  - TOXENV=py35-wagtail110
+  - TOXENV=py27-wagtail111
+  - TOXENV=py34-wagtail111
+  - TOXENV=py35-wagtail111
+  - TOXENV=py27-wagtail112
+  - TOXENV=py34-wagtail112
+  - TOXENV=py35-wagtail112
   - TOXENV=flake8

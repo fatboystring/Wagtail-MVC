@@ -77,4 +77,4 @@ Currently tested against wagtail1.8, wagtail1.7, wagtail1.6 and wagtail1.5 but t
 # Change Log
 
  - 0.1.0: Initial creation of the wagtail_mvc app
- - 0.2.0: Test against wagtail 1.8
+ - 0.2.0: Added wagtail_mvc_url decorator. Test against wagtail 1.8, 1.9, 1.10, 1.11, 1.12
