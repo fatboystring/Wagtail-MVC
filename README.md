@@ -1,4 +1,4 @@
-[![Wagtail MVC on pypi](https://img.shields.io/badge/pypi-0.1.0-green.svg)](https://pypi.python.org/pypi/wagtail_mvc)
+[![Wagtail MVC on pypi](https://img.shields.io/badge/pypi-0.2.0-green.svg)](https://pypi.python.org/pypi/wagtail_mvc)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Build status](https://travis-ci.org/fatboystring/Wagtail-MVC.svg?branch=master)
 
@@ -72,7 +72,7 @@ class MyModel(Page):
 
 ## Support
 
-Currently tested against wagtail1.8, wagtail1.7, wagtail1.6 and wagtail1.5 but this package is likely to work with older versions of wagtail without any problems.
+Currently tested against wagtail1.12, watail1.11, wagtail1.10, wagtail1.9, wagtail1.8, wagtail1.7, wagtail1.6 and wagtail1.5 but this package is likely to work with older versions of wagtail without any problems.
 
 # Change Log
 
