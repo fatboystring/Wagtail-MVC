@@ -27,7 +27,9 @@ def wagtail_mvc_url(*decorator_args, **decorator_kwargs):
             return '/{0}/'.format('/'.join([part for part in parts if part]))
         return outer
 
-    if len(decorator_args) == 1 and len(decorator_kwargs) == 0 and callable(decorator_args[0]):
+    if len(decorator_args) == 1 \
+            and len(decorator_kwargs) == 0 \
+            and callable(decorator_args[0]):
         # We assume the decorator function has not been called
         # or passed any arguments and return the result of calling
         # the decorator function
