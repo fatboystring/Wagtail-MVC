@@ -5,6 +5,6 @@ MVC app for Wagtail CMS
 from __future__ import unicode_literals
 
 
-VERSION = ('0', '2', '0')
+VERSION = ('0', '3', '0')
 
 __version__ = '.'.join(VERSION)
