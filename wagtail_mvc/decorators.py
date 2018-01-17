@@ -13,10 +13,10 @@ def wagtail_mvc_url(*decorator_args, **decorator_kwargs):
     :param func: The method to decorate
     :return: Full url
     """
+    parent_attr = decorator_kwargs.get('parent_attr')
+
     def decorator(func):
         def outer(self, *args, **kwargs):
-            parent_attr = decorator_kwargs.get('parent_attr')
-
             if parent_attr:
                 parent = getattr(self, parent_attr, None)
             else:
@@ -28,8 +28,8 @@ def wagtail_mvc_url(*decorator_args, **decorator_kwargs):
         return outer
 
     if len(decorator_args) == 1 \
-            and len(decorator_kwargs) == 0 \
-            and callable(decorator_args[0]):
+            and callable(decorator_args[0]) \
+            and not parent_attr:
         # We assume the decorator function has not been called
         # or passed any arguments and return the result of calling
         # the decorator function
