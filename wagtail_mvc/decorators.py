@@ -5,7 +5,7 @@ wagtail_mvc decorators
 from __future__ import unicode_literals
 
 
-def wagtail_mvc_url(*decorator_args, parent_attr=None):
+def wagtail_mvc_url(*decorator_args, **decorator_kwargs):
     """
     Decorates an existing method responsible for generating a url
     prepends the parent url to the generated url to account for
@@ -13,6 +13,8 @@ def wagtail_mvc_url(*decorator_args, parent_attr=None):
     :param func: The method to decorate
     :return: Full url
     """
+    parent_attr = decorator_kwargs.get('parent_attr')
+
     def decorator(func):
         def outer(self, *args, **kwargs):
             if parent_attr:
