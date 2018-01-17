@@ -26,8 +26,8 @@ def wagtail_mvc_url(*decorator_args, parent_attr=None):
         return outer
 
     if len(decorator_args) == 1 \
-            and len(decorator_kwargs) == 0 \
-            and callable(decorator_args[0]):
+            and callable(decorator_args[0]) \
+            and not parent_attr:
         # We assume the decorator function has not been called
         # or passed any arguments and return the result of calling
         # the decorator function
